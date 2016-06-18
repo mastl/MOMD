@@ -1,0 +1,20 @@
+My Own Markdown
+The title is in the first line. If not specified otherwise, it will be a heading 1.
+
+## Headings
+Headings follow markdown.
+
+Heading 1: #
+Heading 2: ##
+Heading 3: ###
+Heading 4: ####
+Heading 5: #####
+Heading 6: ######
+
+Headings must be declared at the start of a line. 
+
+## Comments
+% Comments that will not be displayed when published are started with "%". They must be at the start of a line.
+
+
+H2 Lists
