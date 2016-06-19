@@ -1,5 +1,7 @@
-# Test file for the md_to_db.py script
+Test file for the md_to_db.py script
 18-06-2016
+
+Tags: Test, MOMD, markdown
 
 ## This is a heading 2
 Here is some body text for that heading two.
