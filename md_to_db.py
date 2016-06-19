@@ -1,5 +1,8 @@
 """Converts MOMD to database output."""
 
+import datetime
+
+
 # >> Specify identifiers <<
 identifiers = {
 	'headers': ['#', '##', '###', '####'],
@@ -21,12 +24,16 @@ identifiers = {
 class Note(object):
 	"""Note object which consists of text."""
 
-	def __init__(self, title, date, tags, text):
+	def __init__(self, text, title, date, tags):
 		"""Return a TextSection object whose name is *name*."""
-		self.name = title
+		self.text = text
+		self.title = title
 		self.date = date
 		self.tags = tags
-		self.text = text
+
+	def __repr__(self):
+		"""What to print when printing a note."""
+		return "%" % (self.title)
 
 	def store_to_db(self, db):
 		"""Store object to database."""
@@ -39,7 +46,6 @@ class Note(object):
 def first_word(line):
 	"""Isolate first word in line."""
 	words = line.split()
-	# print(words)
 	try:
 		value = words[0]
 	except:
@@ -49,18 +55,21 @@ def first_word(line):
 
 def extract_info(text):
 	"""Find relevant information in file. I.e. title, date and tags."""
+	info = {
+		'title': "",
+		'date': datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S"),
+		'tags': []
+	}
+
 	text_lines = text.split('\n')
 	text_lines = [x for x in text_lines if x != '']
 
-	info = {'title': "", 'date': "", 'tags': []}
 	counter = 0
 	for text_line in text_lines[0:9]:
 		counter += 1
 		possible_identifier = first_word(text_line).lower()
 		if counter == 1:  # Extract title
 			info['title'] = ignore_identifiers(text_line, possible_identifier)
-		elif counter == 2:  # Extract date
-			info['date'] = text_line
 		elif possible_identifier in identifiers['tags']:  # Extract tags
 			tags = ignore_identifiers(text_line, possible_identifier)
 			tags = tags.split(',')
@@ -68,6 +77,17 @@ def extract_info(text):
 				tag = tag.strip()
 			info['tags'] = tags
 	return info  # Return dictionary with title, date and tags!
+
+
+def generate_text(filename):
+	"""Generate text from file."""
+	try:
+		file = open(filename, 'r')
+		text = file.read()
+		file.close()
+	except TypeError:
+		print('File input must be readable.')
+	return text
 
 
 def ignore_identifiers(text_line, possible_identifier):
@@ -82,11 +102,10 @@ def ignore_identifiers(text_line, possible_identifier):
 
 # >> Execute <<
 filename = 'test_file.md'
-file = open(filename, 'r')
+# filename = input('Specify text file: ')
 
-text = file.read()
-file.close()
+text = generate_text(filename)
+text_info = extract_info(text)
 
-file_info = extract_info(text)
-
-print(file_info)
+note = Note(text, text_info)
+print(note)

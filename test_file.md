@@ -1,4 +1,4 @@
-Test file for the md_to_db.py script
+# Test file for the md_to_db.py script
 18-06-2016
 
 Tags: Test, MOMD, markdown
