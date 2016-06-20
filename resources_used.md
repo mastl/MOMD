@@ -1,6 +1,8 @@
 # Resources used for the MOMD project
 20-06-2016
 
+Tags: Resources, Learning Python, Python basics, OOP
+
 ## Python basics
 1. [Date and time intro](http://www.pythonforbeginners.com/basics/python-datetime-time-examples)
 

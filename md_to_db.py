@@ -1,6 +1,7 @@
 """Converts MOMD to database output."""
 
 import datetime
+import os.path
 
 
 # >> Specify identifiers <<
@@ -8,7 +9,7 @@ identifiers = {
 	'headers': ['#', '##', '###', '####'],
 	'comments': ['%%', 'comment:'],
 	'lists': ['+.', '1.', 'i.', 'a.', 'A.'],
-	'tags': ['tags:']
+	'tags': ['tags:', 'tags']
 }
 # print(identifiers)
 
@@ -84,8 +85,7 @@ def extract_info(text):
 		elif possible_identifier in identifiers['tags']:  # Extract tags
 			tags = ignore_identifiers(text_line, possible_identifier)
 			tags = tags.split(',')
-			for tag in tags:
-				tag = tag.strip()
+			tags = [tag.strip() for tag in tags]
 			info['tags'] = tags
 	return info  # Return dictionary with title, date and tags!
 
@@ -104,12 +104,17 @@ def ignore_identifiers(text_line, possible_identifier):
 
 
 # >> Execute <<
+fname = 'resources_used.md'
+# counter = 0
+# fname = input('Input text file: ')
+# while os.path.isfile(fname) == 0:
+# 	fname = input('Please input text file that exists: ')
+# 	counter += 1
+# 	if counter == 10:
+# 		break
 
-filename = 'test_file.md'
-note = Note(filename)
+note = Note(fname)
 
-print(note.title)
-print(note.date)
+# print(note.title)
+# print(note.date)
 print(note.tags)
-print(note)
-print(note.text)
